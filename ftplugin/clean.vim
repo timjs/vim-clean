@@ -23,4 +23,6 @@ endfunction
 
 map <leader>m :call SwitchCleanModule()<CR>
 
+command CpmMake !cpm make
+
 let &cpo = s:save_cpo
