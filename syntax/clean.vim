@@ -10,33 +10,31 @@ endif
 syn keyword cleanTodo TODO FIXME XXX contained
 
 syn region cleanComment start="//.*" end="$" contains=cleanTodo
-"syn region cleanComment start="/*" end="*/" contains=cleanTodo fold
+syn region cleanComment start="/\*" end="\*/" contains=cleanTodo fold
 
 syn keyword cleanConditional if case
-syn keyword cleanLabel let! let # #! with where in of
+syn keyword cleanLabel let! let with where in of
+syn match cleanLabel "\s\+#\(!\)\?\s\+" display
 syn keyword cleanKeyword infixl infixr infix
 syn keyword cleanTypeClass class instance export
 syn keyword cleanBasicType Int Real Char Bool String
 syn keyword cleanSpecialType World ProcId Void Files File
 
-"syn match cleanCharDenot "'.'"
-"syn match cleanCharsDenot "'[^'\\]*\(\\.[^'\\]\)*'" contained
-"syn region cleanStringDenot start=/"/ skip=/\\"/ end=/"/ fold
-"syn match cleanIntegerDenot "[+-~]\=\<\(\d\+\|0[0-7]\+\|0x[0-9A-Fa-f]\+\)\>"
-"syn match cleanRealDenot "[+-~]\=\<\d\+\.\d+\(E[+-~]\=\d+\)\="
-"syn keyword cleanBoolDenot True False
+syn match cleanCharDenot "'.'" display
+syn match cleanCharsDenot "'[^'\\]*\(\\.[^'\\]\)*'" contained display
+syn match cleanIntegerDenot "[+-~]\=\<\(\d\+\|0[0-7]\+\|0x[0-9A-Fa-f]\+\)\>" display
+syn match cleanRealDenot "[+-~]\=\<\d\+\.\d+\(E[+-~]\=\d+\)\=" display
+syn region cleanStringDenot start=/"/ skip=/\\"/ end=/"/ fold
+syn keyword cleanBoolDenot True False
 
-syn match cleanModuleSystem "^\(implementation\|definition\|system\)\?\s\+module"
+syn match cleanModuleSystem "^\(implementation\|definition\|system\)\?\s\+module" display
 
 syn region cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword keepend
 syn keyword cleanIncludeKeyword contained from import as qualified
 
-"syn region cleanParens start="(" end=")" contains=ALL
-"syn region cleanList start="\[" end="\]" contains=ALL
-"syn region cleanRecord start="{" end="}" contains=ALL
-"syn region cleanArray start="{:" end=":}" contains=ALL
+syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\)\?\|\(:\)\?}\|,\||"
 
-"syn match cleanFuncTypeDef "\([a-zA-Z].*\|(\=[-~@#$%^?!+*<>\/|&=:]\+)\=\)[ \t]*\(infix[lr]\=\)\=[ \t]*\d\=[ \t]*::.*->.*" contains=cleanSpecialType,cleanBasicType,cleanList,cleanRecord,cleanArray,cleanTuple,cleanParens
+syn match cleanFuncTypeDef "\([a-zA-Z].*\|(\=[-~@#$%^?!+*<>\/|&=:]\+)\=\)[ \t]*\(infix[lr]\=\)\=[ \t]*\d\=[ \t]*::.*->.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters
 
 command -nargs=+ HiLink hi def link <args>
 
@@ -62,11 +60,7 @@ HiLink cleanIntegerDenot    Number
 HiLink cleanRealDenot       Float
 HiLink cleanBoolDenot       Boolean
 
-HiLink cleanParens          Special
-HiLink cleanSpecial         Special
-HiLink cleanList            Special
-HiLink cleanArray           Special
-HiLink cleanRecord          Special
+HiLink cleanDelimiters      Special
 
 HiLink cleanFuncTypeDef     Typedef
 
