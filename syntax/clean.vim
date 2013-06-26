@@ -29,13 +29,14 @@ syn keyword cleanBoolDenot True False
 
 syn match cleanModuleSystem "^\(implementation\|definition\|system\)\?\s\+module" display
 
-syn region cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword keepend
+syn region cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword,cleanDelimiters keepend
 syn keyword cleanIncludeKeyword contained from import as qualified
 
 syn match cleanQualified "'[A-Za-z0-9_\.]\+'\."
 
-syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\)\?\|\(:\)\?}\|,\||\|&"
+syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\)\?\|\(:\)\?}\|,\||\|&\|;"
 
+syn match cleanTypeDef "^\s*::"
 syn match cleanFuncTypeDef "^\s*\((\?\a\+\w*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef
 syn match cleanFuncDef "^\s*\((\?\a\+\w*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::" contained
 syn match cleanTypeAnnot "\(!\|\*\|\.\|\:\|<=\)" contained
@@ -70,7 +71,8 @@ HiLink cleanBoolDenot       Boolean
 
 HiLink cleanDelimiters      Delimiter
 
-HiLink cleanFuncTypeDef     Typedef
+HiLink cleanTypeDef         Typedef
+HiLink cleanFuncTypeDef     Type
 HiLink cleanFuncDef         Function
 HiLink cleanTypeAnnot       Special
 
