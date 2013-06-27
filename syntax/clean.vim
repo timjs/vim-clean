@@ -16,9 +16,10 @@ syn keyword cleanConditional if case
 syn keyword cleanLabel let! let with where in of
 syn match cleanLabel "\s\+#\(!\)\?\s\+" display
 syn keyword cleanKeyword infixl infixr infix
-syn keyword cleanTypeClass class instance export
+syn keyword cleanTypeClass class instance export special
 syn keyword cleanBasicType Int Real Char Bool String
 syn keyword cleanSpecialType World ProcId Void Files File
+syn keyword cleanFFI foreign code
 
 syn match cleanCharDenot "'.'" display
 syn match cleanCharsDenot "'[^'\\]*\(\\.[^'\\]\)*'" contained display
@@ -34,12 +35,13 @@ syn keyword cleanIncludeKeyword contained from import as qualified
 
 syn match cleanQualified "'[A-Za-z0-9_\.]\+'\."
 
-syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\)\?\|\(:\)\?}\|,\||\|&\|;"
+syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\)\?\|\(:\)\?}\|,\||\|&\|;\|_"
 
-syn match cleanTypeDef "^\s*::"
-syn match cleanFuncTypeDef "^\s*\((\?\a\+\w*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef
-syn match cleanFuncDef "^\s*\((\?\a\+\w*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::" contained
+syn match cleanTypeDef "\s*::\s*"
+syn match cleanFuncTypeDef "^\s*\((\?\a\+\w*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef
+syn match cleanFuncDef "^\s*\((\?\a\+\w*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::" contained contains=cleanTypeDef
 syn match cleanTypeAnnot "\(!\|\*\|\.\|\:\|<=\)" contained
+syn keyword cleanDeriving deriving
 
 syn match cleanOperators "=\(:\)\?\|\s\+o\s\+\|\\\|->\|<-"
 
@@ -56,6 +58,7 @@ HiLink cleanTypeClass       Keyword
 HiLink cleanIncludeKeyword  Include
 HiLink cleanBasicType       Type
 HiLink cleanSpecialType     Type
+HiLink cleanFFI             Keyword
 
 HiLink cleanModuleSystem    Keyword
 HiLink cleanIncludeKeyword  Include
@@ -75,9 +78,13 @@ HiLink cleanTypeDef         Typedef
 HiLink cleanFuncTypeDef     Type
 HiLink cleanFuncDef         Function
 HiLink cleanTypeAnnot       Special
+HiLink cleanDeriving        Keyword
 
 HiLink cleanOperators       Operator
 
 delcommand HiLink
+
+syntax sync fromstart
+setlocal foldmethod=syntax
 
 let b:current_syntax = "clean"
