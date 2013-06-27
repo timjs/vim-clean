@@ -9,7 +9,7 @@ endif
 
 syn keyword cleanTodo TODO FIXME XXX contained
 
-syn region cleanComment start="//.*" end="$" contains=cleanTodo
+syn region cleanComment start="//.*" end="$" display contains=cleanTodo
 syn region cleanComment start="/\*" end="\*/" contains=cleanTodo fold
 
 syn keyword cleanConditional if case
@@ -33,17 +33,17 @@ syn match cleanModuleSystem "^\(implementation\|definition\|system\)\?\s\+module
 syn region cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword,cleanDelimiters,cleanTypeDef keepend
 syn keyword cleanIncludeKeyword contained from import as qualified
 
-syn match cleanQualified "'[A-Za-z0-9_\.]\+'\."
+syn match cleanQualified "'[A-Za-z0-9_\.]\+'\." display
 
-syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\|#\|!\)\?\|\(:\)\?}\|,\||\|&\|;\|_"
+syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\|#\|!\)\?\|\(:\)\?}\|,\||\|&\|;\|_" display
 
-syn match cleanTypeDef "\s*::\s*"
+syn match cleanTypeDef "\s*::\s*" display
 syn match cleanFuncTypeDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s*::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef,cleanComment
 syn match cleanFuncDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s*::" contained contains=cleanTypeDef,cleanComment
 syn match cleanTypeAnnot "\(!\|\*\|\.\|\:\|<=\)" contained
 syn keyword cleanDeriving deriving
 
-syn match cleanOperators "=\(:\)\?\|:==\|\s\+o\s\+\|\\\|->\|\(<-\(:\)\?\)"
+syn match cleanOperators "=\(:\)\?\|:==\|\s\+o\s\+\|\\\|->\|\(<-\(:\)\?\)" display
 
 command -nargs=+ HiLink hi def link <args>
 
