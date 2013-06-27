@@ -38,8 +38,8 @@ syn match cleanQualified "'[A-Za-z0-9_\.]\+'\."
 syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\|#\|!\)\?\|\(:\)\?}\|,\||\|&\|;\|_"
 
 syn match cleanTypeDef "\s*::\s*"
-syn match cleanFuncTypeDef "^\s*\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef
-syn match cleanFuncDef "^\s*\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::" contained contains=cleanTypeDef
+syn match cleanFuncTypeDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef
+syn match cleanFuncDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::" contained contains=cleanTypeDef
 syn match cleanTypeAnnot "\(!\|\*\|\.\|\:\|<=\)" contained
 syn keyword cleanDeriving deriving
 
