@@ -30,7 +30,7 @@ syn keyword cleanBoolDenot True False
 
 syn match cleanModuleSystem "^\(implementation\|definition\|system\)\?\s\+module" display
 
-syn region cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword,cleanDelimiters keepend
+syn region cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword,cleanDelimiters,cleanTypeDef keepend
 syn keyword cleanIncludeKeyword contained from import as qualified
 
 syn match cleanQualified "'[A-Za-z0-9_\.]\+'\."
