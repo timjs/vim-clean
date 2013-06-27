@@ -38,13 +38,15 @@ syn match cleanQualified "'[A-Za-z0-9_\.]\+'\." display
 syn match cleanDelimiters "(\|)\|\[\(:\|#\|!\)\?\|\]\|{\(:\|#\|!\)\?\|\(:\)\?}\|,\||\|&\|;\|_" display
 
 syn match cleanTypeDef "\s*::\s*" display
-syn match cleanTypeDef "\s*::\s*[a-zA-Z]\+[a-zA-Z0-9_`]*" display
+syn match cleanTypeDef "\s*::\s*[a-zA-Z\*]\+[a-zA-Z0-9_`]*" display contains=cleanTypeAnnotSimple
+syn match cleanTypeDef "\(^\|\s\+\|(\)[A-Z\*!][a-zA-Z0-9_`\.{}()!\*#\[\]]*\(\s*[a-zA-Z0-9_`\.{}()!\*#\[\]]*\)*\s*" display contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef,cleanComment
 syn match cleanFuncTypeDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s*::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef,cleanComment
 syn match cleanFuncDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s*::" contained contains=cleanTypeDef,cleanComment
-syn match cleanTypeAnnot "\(!\|\*\|\.\|\:\|<=\)" contained
+syn match cleanTypeAnnot "!\|\*\|\.\|\:\|<=" contained
+syn match cleanTypeAnnotSimple "!\|\*\|\." contained
 syn keyword cleanDeriving deriving
 
-syn match cleanOperators "=\(:\)\?\|:==\|\s\+o\s\+\|\\\|->\|\(<-\(:\)\?\)" display
+syn match cleanOperators "=\(:\)\?\|:==\|\s\+o\s\+\|\\\|->\|<-\(:\)\?" display
 
 command -nargs=+ HiLink hi def link <args>
 
@@ -79,6 +81,7 @@ HiLink cleanTypeDef         Typedef
 HiLink cleanFuncTypeDef     Type
 HiLink cleanFuncDef         Function
 HiLink cleanTypeAnnot       Special
+HiLink cleanTypeAnnotSimple Special
 HiLink cleanDeriving        Keyword
 
 HiLink cleanOperators       Operator
