@@ -35,7 +35,7 @@ syn keyword cleanIncludeKeyword contained from import as qualified
 
 syn match cleanQualified "'[A-Za-z0-9_\.]\+'\."
 
-syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\)\?\|\(:\)\?}\|,\||\|&\|;\|_"
+syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\|#\|!\)\?\|\(:\)\?}\|,\||\|&\|;\|_"
 
 syn match cleanTypeDef "\s*::\s*"
 syn match cleanFuncTypeDef "^\s*\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s\+::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef
@@ -43,7 +43,7 @@ syn match cleanFuncDef "^\s*\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]
 syn match cleanTypeAnnot "\(!\|\*\|\.\|\:\|<=\)" contained
 syn keyword cleanDeriving deriving
 
-syn match cleanOperators "=\(:\)\?\|:==\|\s\+o\s\+\|\\\|->\|<-"
+syn match cleanOperators "=\(:\)\?\|:==\|\s\+o\s\+\|\\\|->\|\(<-\(:\)\?\)"
 
 command -nargs=+ HiLink hi def link <args>
 
