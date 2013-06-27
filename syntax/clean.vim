@@ -35,7 +35,7 @@ syn keyword cleanIncludeKeyword contained from import as qualified
 
 syn match cleanQualified "'[A-Za-z0-9_\.]\+'\." display
 
-syn match cleanDelimiters "(\|)\|\[\|\]\|{\(:\|#\|!\)\?\|\(:\)\?}\|,\||\|&\|;\|_" display
+syn match cleanDelimiters "(\|)\|\[\(:\|#\|!\)\?\|\]\|{\(:\|#\|!\)\?\|\(:\)\?}\|,\||\|&\|;\|_" display
 
 syn match cleanTypeDef "\s*::\s*" display
 syn match cleanFuncTypeDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s*::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef,cleanComment
@@ -88,3 +88,5 @@ syntax sync fromstart
 setlocal foldmethod=syntax
 
 let b:current_syntax = "clean"
+
+
