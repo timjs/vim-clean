@@ -38,6 +38,7 @@ syn match cleanQualified "'[A-Za-z0-9_\.]\+'\." display
 syn match cleanDelimiters "(\|)\|\[\(:\|#\|!\)\?\|\]\|{\(:\|#\|!\)\?\|\(:\)\?}\|,\||\|&\|;\|_" display
 
 syn match cleanTypeDef "\s*::\s*" display
+syn match cleanTypeDef "\s*::\s*[a-zA-Z]\+[a-zA-Z0-9_`]*" display
 syn match cleanFuncTypeDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s*::.*" contains=cleanSpecialType,cleanBasicType,cleanDelimiters,cleanTypeAnnot,cleanFuncDef,cleanTypeDef,cleanComment
 syn match cleanFuncDef "\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]\+)\?\)\(\s\+infix[lr]\?\s\+\d\)\?\s*::" contained contains=cleanTypeDef,cleanComment
 syn match cleanTypeAnnot "\(!\|\*\|\.\|\:\|<=\)" contained
