@@ -43,7 +43,7 @@ syn match cleanFuncDef "^\s*\((\?\a\+[a-zA-Z0-9_`]*)\?\|(\?[-~@#$%^?!+*<>\/|&=:]
 syn match cleanTypeAnnot "\(!\|\*\|\.\|\:\|<=\)" contained
 syn keyword cleanDeriving deriving
 
-syn match cleanOperators "=\(:\)\?\|\s\+o\s\+\|\\\|->\|<-"
+syn match cleanOperators "=\(:\)\?\|:==\|\s\+o\s\+\|\\\|->\|<-"
 
 command -nargs=+ HiLink hi def link <args>
 
