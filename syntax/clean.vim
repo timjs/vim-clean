@@ -30,15 +30,13 @@ let s:SelectorVariable      = s:LowerCaseId
 let s:Variable              = s:CommonName
 let s:FieldName             = s:LowerCaseId
 let s:TypeName              = '\(' . s:UpperCaseId . '\|' . s:FunnyId . '\)'
+let s:TypeConstructorName   = s:TypeName
 let s:TypeVariable          = s:LowerCaseId
 let s:UniqueTypeVariable    = s:LowerCaseId
 let s:ClassName             = s:CommonName
 let s:MemberName            = s:CommonName
 
-function! MN()
-  echo '\(' . s:TypeVariable . '\)\?\(\s\+' . s:TypeVariable . '\+\)*'
-endfunction
-
+" Done
 syn match cleanSemiColon ";" display contained
 syn match cleanComma "," display contained
 syn cluster cleanPunctiation contains=cleanSemiColon,cleanComma
@@ -57,48 +55,72 @@ exec s:CleanTypeVariable
 let s:CleanConstructorName = 'syn match cleanConstructorName "' . s:ConstructorName . '" display contained'
 exec s:CleanConstructorName
 
-"syn match cleanStrict '!' display contained
+syn match cleanStrict '!' display contained
 
-"let s:CleanUnqTypeAttrib = 'syn match cleanUnqTypeAttrib "\*\|\.\|' . s:UniqueTypeVariable . ':" display contained'
-"exec s:CleanUnqTypeAttrib
+let s:ExistentialQuantVariables = 'E\..\{-}:'
+let s:CleanExistentialQuantVariables = 'syn match cleanExistentialQuantVariables "' . s:ExistentialQuantVariables . '" display contained contains=cleanTypeVariable nextgroup=cleanConstructor,cleanConstructorName'
+exec s:CleanExistentialQuantVariables
 
-"syntax cluster cleanBrackType contains=cleanUniversalQuantVariables,cleanStrict,cleanUnqTypeAttrib,cleanTypeExpression
-"syntax cluster cleanType contains=@cleanBrackType
+let s:UniversalQuantVariables = 'A\..\{-}:'
+let s:CleanUniversalQuantVariables = 'syn match cleanUniversalQuantVariables "' . s:UniversalQuantVariables . '" display contained contains=cleanTypeVariable nextgroup=cleanStrict,cleanUnqTypeAttrib,cleanTypeExpresion'
+exec s:CleanUniversalQuantVariables
 
-"let s:BrackType = ''
-"let s:CleanBrackType = 'syn match cleanBrackType "' . s:BrackType . '" contained display skipwhite'
-"exec s:CleanBrackType
+let s:UniqTypeAttrib = '\*\|\.\|' . s:UniqueTypeVariable . ':'
+let s:CleanUniqTypeAttrib = 'syn match cleanUniqTypeAttrib "' . s:UniqTypeAttrib . '" contained display skipwhite'
+exec s:CleanUniqTypeAttrib
 
-"let s:Constructor = '(\?\s*' . s:ConstructorName . '\s*)\?'
-"let s:CleanConstructor = 'syn match cleanConstructor "' . s:Constructor . '" display skipwhite contains=cleanConstructorName contained nextgroup=cleanFix,cleanPrec,@cleanBrackType'
-"exec s:CleanConstructor
+let s:Strict = '!'
 
-syn match cleanExistentialQuantVariables "E\..\{-}:" display contained contains=cleanTypeVariable nextgroup=cleanConstructor,cleanConstructorName
-syn match cleanUniversalQuantVariables "A\..\{-}:" display contained contains=cleanTypeVariable nextgroup=cleanStrict,cleanUnqTypeAttrib,cleanTypeExpresion
+let s:CleanFieldName = 'syn match cleanFieldName "\<' . s:FieldName . '\>" contained display skipwhite'
+exec s:CleanFieldName
 
-syn match cleanTypeDefStart "^\s*::" display skipwhite nextgroup=cleanTypeDefType
+" In progress
 
-let s:CleanTypeDefType = 'syn match cleanTypeDefType "\*\?\s*' . s:TypeName . '" display skipwhite contained contains=cleanUniquenessStar,cleanConstructorName nextgroup=cleanTypeVars'
-exec s:CleanTypeDefType
+let s:Type = '' 
+let s:PredefinedType = ''
+let s:PredefinedTypeConstructor = ''
+
+let s:TypeExpression = s:TypeVariable . '\|' . s:TypeConstructorName . '\|(' . s:Type . ')\|' . s:PredefinedType . '\|' . s:PredefinedTypeConstructor
+let s:CleanTypeExpression = 'syn match cleanTypeExpression "' . s:TypeExpression . '" contained display skipwhite contains=cleanTypeVariable,cleanTypeConstructorName,cleanType,cleanPredefinedType,cleanPredefinedTypeConstructor'
+exec s:CleanTypeExpression
+
+let s:BrackType = '\(' . s:UniversalQuantVariables . '\)\?\(' . s:Strict . '\)\?\(' . s:UniqTypeAttrib . '\)\?' . s:TypeExpression
+let s:CleanBrackType = 'syn match cleanBrackType "' . s:BrackType . '" contained display skipwhite'
+exec s:CleanBrackType
+
+
+
+let s:CleanUnqTypeAttrib = 'syn match cleanUnqTypeAttrib "\*\|\.\|' . s:UniqueTypeVariable . ':" display contained'
+exec s:CleanUnqTypeAttrib
+
+let s:Constructor = '(\?\s*' . s:ConstructorName . '\s*)\?'
+let s:CleanConstructor = 'syn match cleanConstructor "' . s:Constructor . '" display skipwhite contains=cleanConstructorName contained nextgroup=cleanFix,cleanPrec,cleanBrackType'
+exec s:CleanConstructor
+
+
+let s:TypeDefStart = '^\s*::\s*\*\?' . s:TypeName . '\(\s\+' . s:TypeVariable . '\)*\s*\(:=\)\?='
+let s:CleanTypeDefStart = 'syn match cleanTypeDefStart "' . s:TypeDefStart . '" display skipwhite contains=cleanUniquenessStar,cleanConstructorName,cleanTypeVariable,cleanTypeDefEqs nextgroup=cleanRecordTypeDef,cleanAlgebraicTypeDef,cleanSynonymTypeDef'
+exec s:CleanTypeDefStart
+
+syn match cleanTypeDefEqs "\(:=\)\?=" display contained
+
+"syn match cleanTypeDefStart "^\s*::" display skipwhite nextgroup=cleanTypeDefType
+
+"let s:CleanTypeDefType = 'syn match cleanTypeDefType "\*\?' . s:TypeName . '" display skipwhite contained contains=cleanUniquenessStar,cleanConstructorName nextgroup=cleanTypeDefVars,cleanRecordTypeDef,cleanAlgebraicTypeDef'
+"exec s:CleanTypeDefType
 
 syn match cleanUniquenessStar "\*" contained
 
-let s:CleanTypeDefVars = 'syn match cleanTypeVars "\(' . s:TypeVariable . '\)\?\(\s\+\(' . s:TypeVariable . '\)\+\)*" display skipwhite contained nextgroup=cleanAlgebraicTypeDef,cleanRecordTypeDef,cleanSynonymTypeDef'
-exec s:CleanTypeDefVars
+let s:RecordTypeDefRhs = '\(' . s:ExistentialQuantVariables . '\)\?\(' . s:Strict . '\)\?\s*{.*}'
+let s:CleanRecordTypeDefRhs = 'syn match cleanRecordTypeDef "' . s:RecordTypeDefRhs . '" contains=cleanFieldName,cleanType contained fold contains=cleanRecordEntry'
+exec s:CleanRecordTypeDefRhs
 
-syn match cleanRecordTypeDef "=" display skipwhite contained nextgroup=cleanRecordRhs
-syn region cleanRecordRhs start="{" end="}" contained fold contains=cleanRecordEntry
 syn match cleanRecordEntry ",\?" display skipwhite contained nextgroup=cleanTypeDef
-
-"syn match cleanAlgebraicTypeDef "=" display skipwhite contained nextgroup=cleanExistentialQuantVariables,cleanConstructor
-"syn match cleanAlgebraicTypeRhs "cleanConstructorDef"
 
 
 "let s:CleanConstructorDef = 'syn match cleanConstructorDef "\(E\..*:\)\?\s*(\?\s*' . s:ConstructorName . '\s*)\?\(\s\+' . s:Fix . '\)\?\(\s\+' . s:Prec . '\)\?" display skipwhite contained contains=cleanExistentialQuantVariables,cleanConstructorName,cleanFix,cleanPrec'
 "exec s:CleanConstructorDef
 
-"syn match cleanRecordTypeDef "=" display skipwhite contained nextgroup=cleanRecordTypeRhs
-"syn match cleanSynonymTypeDef ":==" display skipwhite contained nextgroup=cleanSynonymTypeRhs
 
 syn keyword cleanTodo TODO FIXME XXX contained
 
@@ -113,7 +135,7 @@ syn keyword cleanPredefType World File String
 syn match cleanIntegerDenotation "[\~+-]\?\<\(\d\+\|0[0-7]\+\|0x[0-9A-Fa-f]\+\)\>" display
 syn match cleanRealDenotation "[\~+-]\?\<\d\+\.\d\+\(E[+-\~]\?\d\+\)\?" display
 syn keyword cleanBoolDenotation True False
-syn match cleanCharDenototation "'\(\\\\\|\\'\|[^']\)'" display " TODO Redundant? Seems to be covered by the CharsDenotation
+syn match cleanCharDenototation "'\(\\\\\|\\'\|[^']\)'" display
 syn match cleanCharsDenotation  "'\(\\\\\|\\'\|[^']\)\+'" display
 
 let s:CleanModuleName = 'syn match cleanModuleName "' . s:ModuleName . '" contained display'
@@ -142,20 +164,36 @@ exec s:CleanImplicitImport1
 
 command -nargs=+ HiLink hi def link <args>
 
+
+" Done
+HiLink cleanFix                        Keyword
+HiLink cleanBasicType                  Type
+HiLink cleanPredefType                 Type
+HiLink cleanComment                    Comment
+HiLink cleanTodo                       Todo
+HiLink cleanCharDenototation           Character
+HiLink cleanCharsDenotation            String
+HiLink cleanStringDenotation           String
+HiLink cleanIntegerDenotation          Number
+HiLink cleanRealDenotation             Float
+HiLink cleanBoolDenotation             Boolean
+HiLink cleanExistentialQuantVariables  Keyword
+HiLink cleanUniversalQuantVariables    Keyword
+HiLink cleanTypeDefEqs                 Typedef
+HiLink cleanTypeVariable               Identifier
+HiLink cleanBrackType                  Special
+HiLink cleanUniqTypeAttrib             Special
+HiLink cleanRecordTypeDef              Special
+HiLink cleanFieldName                  Identifier
+
+" In progress
+HiLink cleanTypeDefStart Type
 HiLink cleanImplicitImport1  Keyword
 HiLink cleanImplicitImport2  Keyword
 HiLink cleanExplicitImport  Keyword
-HiLink cleanFix             Keyword
 HiLink cleanPrec            Number
 HiLink cleanModule          Keyword
 HiLink cleanModuleName      Keyword
-HiLink cleanTodo            Todo
-HiLink cleanBasicType       Type
-HiLink cleanPredefType      Type
-HiLink cleanExistentialQuantVariables Type
-HiLink cleanUniversalQuantVariables Type
-HiLink cleanTypeVariable    Type
-HiLink cleanComment         Comment
 HiLink cleanConditional     Conditional
 
 HiLink cleanLabel           Label
@@ -169,12 +207,6 @@ HiLink cleanIncludeKeyword  Include
 
 HiLink cleanQualified       Identifier
 
-HiLink cleanCharDenototation     Character
-HiLink cleanCharsDenotation      String
-HiLink cleanStringDenotation     String
-HiLink cleanIntegerDenotation    Number
-HiLink cleanRealDenotation       Float
-HiLink cleanBoolDenotation       Boolean
 
 HiLink cleanDelimiters      Delimiter
 
@@ -182,9 +214,7 @@ HiLink cleanTypeDefStart    Typedef
 HiLink cleanTypeDefType     Typedef
 HiLink cleanConstructorName Type
 HiLink cleanUniquenessStar  Special
-HiLink cleanTypeVars        Type
-HiLink cleanRecordTypeDef   Operator
-HiLink cleanRecordRhs       Keyword
+HiLink cleanRecordTypeRhs    Keyword
 
 HiLink cleanTypeDef         Typedef
 HiLink cleanFuncTypeDef     Type
