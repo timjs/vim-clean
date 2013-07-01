@@ -25,4 +25,7 @@ map <leader>m :call SwitchCleanModule()<CR>
 
 command CpmMake !cpm make
 
+" We are looking for tags in ./Clean System Files/ModuleName/tags
+set tags=./**2/tags
+
 let &cpo = s:save_cpo
