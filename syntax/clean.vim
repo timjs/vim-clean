@@ -74,9 +74,37 @@ let s:Strict = '!'
 let s:CleanFieldName = 'syn match cleanFieldName "\<' . s:FieldName . '\>" contained display skipwhite'
 exec s:CleanFieldName
 
+let s:CleanFunctionName = 'syn match cleanFunctionName "' . s:FunctionName . '" contained display skipwhite'
+exec s:CleanFunctionName
+
+syn match cleanInfixParens "(\|)" contained display skipwhite
+
+syn match cleanFunctionTypeColons "::" contained display skipwhite
+
+syn cluster cleanPredefinedType contains=cleanBasicType,cleanListType,cleanTupleType,cleanArrayType,cleanArrowType,cleanPredefType
+syn cluster cleanClassDef contains=cleanTypeClassDef,cleanTypeClassInstanceDef,cleanTypeClassInstanceExportDef
+syn cluster cleanGenericsDef contains=cleanGenericDef,cleanGenericCase,cleanDeriveDef
+syn cluster cleanGenericExportDef contains=cleanGenericDef,cleanDeriveDef
+
+let s:ForeignExportDef = 'syn match cleanForeignExportDef "foreign\s\+export\(\s\+\(ccall\|stdcall\)\)\?\s\+' . s:FunctionName . '"'
+exec s:ForeignExportDef
+
+syn match cleanTypeKind "{|\*\s*\(->\s*\*\)*\s*|}" display contained skipwhite
+
 " In progress
 
-let s:Type = '' 
+let s:Type = ''
+
+let s:ListType = '[\(!\|#\)\?\s*' . s:Type . '\s*!\?]'
+let s:ArrayType = '{\(!\|#\)\?\s*' . s:Type . '\s*}'
+
+let s:FunctionTypeDef = '^\s*(\?' . s:FunctionName . ')\?\(\s\+' . s:Fix . '\)\?\(\s\+' . s:Prec . '\)\?\s*::'
+let s:CleanFunctionTypeDef = 'syn match cleanFunctionTypeDef "' . s:FunctionTypeDef . '" skipwhite contains=cleanFunctionName,cleanFix,cleanPrec,cleanInfixParens,cleanFunctionTypeColons nextgroup=cleanFunctionType'
+exec s:CleanFunctionTypeDef
+
+let s:FunctionType = '\(' . s:Type . '\s*->\s*\)*'
+
+
 let s:PredefinedType = ''
 let s:PredefinedTypeConstructor = ''
 
@@ -84,7 +112,7 @@ let s:TypeExpression = s:TypeVariable . '\|' . s:TypeConstructorName . '\|(' . s
 let s:CleanTypeExpression = 'syn match cleanTypeExpression "' . s:TypeExpression . '" contained display skipwhite contains=cleanTypeVariable,cleanTypeConstructorName,cleanType,cleanPredefinedType,cleanPredefinedTypeConstructor'
 exec s:CleanTypeExpression
 
-let s:BrackType = '\(' . s:UniversalQuantVariables . '\)\?\(' . s:Strict . '\)\?\(' . s:UniqTypeAttrib . '\)\?' . s:TypeExpression
+let s:BrackType = '\(' . s:UniversalQuantVariables . '\)\?\(' . s:Strict . '\)\?\(' . s:UniqTypeAttrib . '\)\?(\?' . s:TypeExpression . ')\?'
 let s:CleanBrackType = 'syn match cleanBrackType "' . s:BrackType . '" contained display skipwhite'
 exec s:CleanBrackType
 
@@ -104,7 +132,6 @@ exec s:CleanTypeDefStart
 
 syn match cleanTypeDefEqs "\(:=\)\?=" display contained
 
-"syn match cleanTypeDefStart "^\s*::" display skipwhite nextgroup=cleanTypeDefType
 
 "let s:CleanTypeDefType = 'syn match cleanTypeDefType "\*\?' . s:TypeName . '" display skipwhite contained contains=cleanUniquenessStar,cleanConstructorName nextgroup=cleanTypeDefVars,cleanRecordTypeDef,cleanAlgebraicTypeDef'
 "exec s:CleanTypeDefType
@@ -185,8 +212,10 @@ HiLink cleanBrackType                  Special
 HiLink cleanUniqTypeAttrib             Special
 HiLink cleanRecordTypeDef              Special
 HiLink cleanFieldName                  Identifier
+HiLink cleanFunctionTypeColons         Type
 
 " In progress
+HiLink cleanFunctionName Comment
 HiLink cleanTypeDefStart Type
 HiLink cleanImplicitImport1  Keyword
 HiLink cleanImplicitImport2  Keyword
