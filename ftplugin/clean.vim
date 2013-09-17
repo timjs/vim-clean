@@ -28,4 +28,10 @@ command CpmMake !cpm make
 " We are looking for tags in ./Clean System Files/ModuleName/tags
 set tags=./**2/tags
 
+" Use tabs
+setlocal shiftwidth=2
+setlocal tabstop=2
+setlocal softtabstop=2
+setlocal noexpandtab
+
 let &cpo = s:save_cpo
