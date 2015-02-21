@@ -7,10 +7,12 @@ if exists("b:clean_syntax")
   finish
 endif
 
-syn keyword cleanTodo TODO FIXME XXX contained
+syn keyword cleanTodo TODO TODO: FIXME FIXME: XXX XXX: BUG BUG: NB NB: contained
 
-syn region cleanComment start="//.*" end="$" display contains=cleanTodo
-syn region cleanComment start="/\*" end="\*/" contains=cleanTodo fold
+syn region cleanComment start="//.*"    end="$"   contains=cleanTodo display
+syn region cleanComment start="//\*"    end="$"   contains=cleanTodo display
+syn region cleanComment start="^\s*/\*" end="\*/" contains=cleanTodo fold
+syn region cleanComment start="/\*"     end="\*/" contains=cleanTodo
 
 syn keyword cleanConditional if case
 syn keyword cleanLabel let! let with where in of
