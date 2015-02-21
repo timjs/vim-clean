@@ -1,1 +1,1 @@
-au BufNewFile,BufRead *.{icl,dcl} set filetype=clean
+au BufNewFile,BufRead,BufWrite *.{icl,dcl} set filetype=clean
