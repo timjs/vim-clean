@@ -16,7 +16,7 @@ syn region cleanComment start="/\*"     end="\*/" contains=cleanTodo
 
 syn keyword cleanConditional if case
 syn keyword cleanLabel let! let with where in of
-syn match cleanLabel "\s\+#\(!\)\?\s\+" display
+syn match   cleanLabel "^\s*#\(!\)\?\s*" display
 syn keyword cleanKeyword infixl infixr infix
 syn keyword cleanTypeClass class instance export special
 syn keyword cleanBasicType Int Real Char Bool String
