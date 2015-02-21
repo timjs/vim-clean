@@ -32,8 +32,9 @@ syn keyword cleanBoolDenot True False
 
 syn match cleanModuleSystem "^\s*\(\(implementation\|definition\|system\)\s\+\)\?module\s\+" display
 
-syn region cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword,cleanDelimiters,cleanTypeDef keepend
-syn keyword cleanIncludeKeyword contained from import as qualified
+syn region  cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword,cleanDelimiters,cleanTypeDef,cleanModuleImport,cleanTypeClass keepend
+syn keyword cleanIncludeKeyword from import as qualified contained
+syn match   cleanModuleImport "\a\+[a-zA-Z0-9_`.]*" contained
 
 syn match cleanQualified "'[A-Za-z0-9_\.]\+'\." display
 
@@ -60,13 +61,13 @@ HiLink cleanConditional     Conditional
 HiLink cleanLabel           Label
 HiLink cleanKeyword         Keyword
 HiLink cleanTypeClass       Keyword
-HiLink cleanIncludeKeyword  Include
 HiLink cleanBasicType       Type
 HiLink cleanSpecialType     Type
 HiLink cleanFFI             Keyword
 
 HiLink cleanModuleSystem    Keyword
 HiLink cleanIncludeKeyword  Include
+HiLink cleanModuleImport    Type
 
 HiLink cleanQualified       Identifier
 
