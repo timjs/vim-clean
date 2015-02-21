@@ -1,5 +1,5 @@
 " Vim plugin for Clean development
-" Last Change:  2013 June 25
+" Last Change:  2015 Feb. 21
 " Maintainer:   Jurriën Stutterheim <j.stutterheim@cs.ru.nl>
 " License:      This file is placed in the public domain.
 
@@ -24,5 +24,7 @@ endfunction
 map <leader>m :call SwitchCleanModule()<CR>
 
 command CpmMake !cpm make
+
+set tags+=./Clean\\\ System\\\ Files/**/tags
 
 let &cpo = s:save_cpo
