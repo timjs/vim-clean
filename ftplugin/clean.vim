@@ -11,10 +11,8 @@ let g:loaded_clean = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let file_ext  = expand("%:e")
-let file_name = expand("%:r")
-
 function! SwitchCleanModule()
+  let file_name = expand("%:r")
   if expand("%:e") == "icl"
     let newfn = file_name . "." . "dcl"
   else
