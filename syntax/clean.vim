@@ -7,6 +7,8 @@ if exists("b:clean_syntax")
   finish
 endif
 
+set synmaxcol=300
+
 syn keyword cleanTodo TODO TODO: FIXME FIXME: XXX XXX: BUG BUG: NB NB: contained
 
 syn region cleanComment start="//.*"    end="$"   contains=cleanTodo display
@@ -28,7 +30,7 @@ syn match cleanCharDenot "'.'" display
 syn match cleanCharsDenot "'[^'\\]*\(\\.[^'\\]\)*'" contained display
 syn match cleanIntegerDenot "[+-~]\=\<\(\d\+\|0[0-7]\+\|0x[0-9A-Fa-f]\+\)\>" display
 syn match cleanRealDenot "[+-~]\=\<\d\+\.\d+\(E[+-~]\=\d+\)\=" display
-syn region cleanStringDenot start=/"/ skip=/\\"/ end=/"/ fold
+syn region cleanStringDenot start=/"/ skip=/\\"/ end=/"/
 syn keyword cleanBoolDenot True False
 
 syn match cleanModuleSystem "^\s*\(\(implementation\|definition\|system\)\s\+\)\?module\s\+" display
