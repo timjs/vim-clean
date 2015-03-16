@@ -11,10 +11,10 @@ set synmaxcol=300
 
 syn keyword cleanTodo TODO TODO: FIXME FIXME: XXX XXX: BUG BUG: NB NB: contained
 
-syn region cleanComment start="//.*"    end="$"   contains=cleanTodo display
-syn region cleanComment start="//\*"    end="$"   contains=cleanTodo display
-syn region cleanComment start="^\s*/\*" end="\*/" contains=cleanTodo fold
-syn region cleanComment start="/\*"     end="\*/" contains=cleanTodo
+syn region cleanComment start="//.*"    end="$"   contains=cleanTodo,@Spell oneline display
+syn region cleanComment start="//\*"    end="$"   contains=cleanTodo,@Spell oneline display
+syn region cleanComment start="^\s*/\*" end="\*/" contains=cleanTodo,@Spell fold
+syn region cleanComment start="/\*"     end="\*/" contains=cleanTodo,@Spell
 
 syn keyword cleanConditional if case
 syn keyword cleanLabel let! let with where in of
@@ -30,7 +30,7 @@ syn match cleanCharDenot "'.'" display
 syn match cleanCharsDenot "'[^'\\]*\(\\.[^'\\]\)*'" contained display
 syn match cleanIntegerDenot "[+-~]\=\<\(\d\+\|0[0-7]\+\|0x[0-9A-Fa-f]\+\)\>" display
 syn match cleanRealDenot "[+-~]\=\<\d\+\.\d+\(E[+-~]\=\d+\)\=" display
-syn region cleanStringDenot start=/"/ skip=/\\"/ end=/"/
+syn region cleanStringDenot start=/"/ skip=/\\"/ end=/"/ oneline contains=@Spell
 syn keyword cleanBoolDenot True False
 
 syn match cleanModuleSystem "^\s*\(\(implementation\|definition\|system\)\s\+\)\?module\s\+" display
