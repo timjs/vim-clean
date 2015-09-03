@@ -12,12 +12,9 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-set synmaxcol=300
+syn keyword cleanTodo TODO FIXME XXX BUG NB contained
 
-syn keyword cleanTodo TODO TODO: FIXME FIXME: XXX XXX: BUG BUG: NB NB: contained
-
-syn region cleanComment start="//.*"    end="$"   contains=cleanTodo,@Spell oneline display
-syn region cleanComment start="//\*"    end="$"   contains=cleanTodo,@Spell oneline display
+syn region cleanComment start="//"      end="$"   contains=cleanTodo,@Spell oneline display
 syn region cleanComment start="^\s*/\*" end="\*/" contains=cleanTodo,@Spell fold
 syn region cleanComment start="/\*"     end="\*/" contains=cleanTodo,@Spell
 
@@ -100,7 +97,7 @@ HiLink cleanOperators       Operator
 
 delcommand HiLink
 
-syntax sync fromstart
+syntax sync ccomment
 setlocal foldmethod=syntax
 
 let b:current_syntax = 'clean'
