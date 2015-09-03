@@ -56,46 +56,41 @@ syn keyword cleanDeriving deriving
 
 syn match cleanOperators "=\(:\)\?\|:==\|\s\+o\s\+\|\\\|->\|<-\(:\)\?" display
 
-command -nargs=+ HiLink hi def link <args>
+hi def link cleanTodo            Todo
+hi def link cleanComment         Comment
 
-HiLink cleanTodo            Todo
+hi def link cleanConditional     Conditional
+hi def link cleanLabel           Label
+hi def link cleanKeyword         Keyword
+hi def link cleanTypeClass       Keyword
+hi def link cleanForeign         Keyword
+hi def link cleanGenerics        Keyword
+hi def link cleanBasicType       Type
+hi def link cleanSpecialType     cleanBasicType
 
-HiLink cleanComment         Comment
-HiLink cleanConditional     Conditional
+hi def link cleanModuleSystem    Keyword
+hi def link cleanIncludeKeyword  Include
+hi def link cleanModuleImport    Type
 
-HiLink cleanLabel           Label
-HiLink cleanKeyword         Keyword
-HiLink cleanTypeClass       Keyword
-HiLink cleanForeign         Keyword
-HiLink cleanGenerics        Keyword
-HiLink cleanBasicType       Type
-HiLink cleanSpecialType     Type
+hi def link cleanQualified       Identifier
 
-HiLink cleanModuleSystem    Keyword
-HiLink cleanIncludeKeyword  Include
-HiLink cleanModuleImport    Type
+hi def link cleanCharDenot       Character
+hi def link cleanCharsDenot      String
+hi def link cleanStringDenot     String
+hi def link cleanIntegerDenot    Number
+hi def link cleanRealDenot       Float
+hi def link cleanBoolDenot       Boolean
 
-HiLink cleanQualified       Identifier
+hi def link cleanDelimiters      Delimiter
 
-HiLink cleanCharDenot       Character
-HiLink cleanCharsDenot      String
-HiLink cleanStringDenot     String
-HiLink cleanIntegerDenot    Number
-HiLink cleanRealDenot       Float
-HiLink cleanBoolDenot       Boolean
+hi def link cleanTypeDef         Typedef
+hi def link cleanFuncTypeDef     Type
+hi def link cleanFuncDef         Function
+hi def link cleanTypeAnnot       Special
+hi def link cleanTypeAnnotSimple Special
+hi def link cleanDeriving        Keyword
 
-HiLink cleanDelimiters      Delimiter
-
-HiLink cleanTypeDef         Typedef
-HiLink cleanFuncTypeDef     Type
-HiLink cleanFuncDef         Function
-HiLink cleanTypeAnnot       Special
-HiLink cleanTypeAnnotSimple Special
-HiLink cleanDeriving        Keyword
-
-HiLink cleanOperators       Operator
-
-delcommand HiLink
+hi def link cleanOperators       Operator
 
 syntax sync ccomment
 setlocal foldmethod=syntax
