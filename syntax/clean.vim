@@ -1,11 +1,16 @@
 " Clean syntax file
-" Language: Clean
-" Maintainer: Jurriën Stutterheim
-" Latest Revision: 2015 Feb. 21
+" Language:     Clean functional programing language
+" Maintainer:   Jurriën Stutterheim <j.stutterheim@cs.ru.nl>
+" Contributor:  Tim Steenvoorden <t.steenvoorden@cs.ru.nl>
+" License:      This file is placed in the public domain.
+" Last Change:  1 Sep 2015
 
-if exists("b:clean_syntax")
+if exists("b:current_syntax")
   finish
 endif
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 set synmaxcol=300
 
@@ -98,6 +103,9 @@ delcommand HiLink
 syntax sync fromstart
 setlocal foldmethod=syntax
 
-let b:current_syntax = "clean"
+let b:current_syntax = 'clean'
+
+let &cpo = s:cpo_save
+unlet s:cpo_save
 
 

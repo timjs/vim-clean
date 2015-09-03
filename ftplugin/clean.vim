@@ -1,33 +1,50 @@
 " Vim plugin for Clean development
-" Last Change:  2015 Feb. 21
+" Language:     Clean functional programing language
 " Maintainer:   Jurriën Stutterheim <j.stutterheim@cs.ru.nl>
+" Contributor:  Tim Steenvoorden <t.steenvoorden@cs.ru.nl>
 " License:      This file is placed in the public domain.
+" Last Change:  3 Sep 2015
 
-if exists("g:loaded_clean")
+if exists("b:did_ftplugin")
   finish
 endif
-let g:loaded_clean = 1
+let b:did_ftplugin = 1
 
-let s:save_cpo = &cpo
+let s:cpo_save = &cpo
 set cpo&vim
 
-function! SwitchCleanModule()
-  let file_name = expand("%:r")
-  if expand("%:e") == "icl"
-    let newfn = file_name . "." . "dcl"
-  else
-    let newfn = file_name . "." . "icl"
-  endif
-  execute ("edit " . newfn)
-endfunction
+let b:undo_ftplugin = "setlocal ts< sw< et< com< cms< fo< sua<"
 
-map <leader>m :call SwitchCleanModule()<CR>
+setlocal tabstop=4
+setlocal shiftwidth=4
+setlocal expandtab
 
-command CpmMake !cpm make
+setlocal comments=s1:/*,mb:*,ex:*/,://
+setlocal commentstring=//\ %s
 
-let all_tag_files = split(globpath('./Clean\ System\ Files/ctags', '*_tags'), '\n')
-for tag_file_name in all_tag_files
-  exec "set tags+=" . substitute(tag_file_name, "Clean System Files", "Clean\\\\\\\\\\\\\ System\\\\\\\\\\\\ Files", "") . ";"
+setlocal formatoptions-=tc formatoptions+=ro
+
+setlocal suffixesadd=.icl,.dcl
+
+if !exists("*s:CleanSwitchModule")
+  function s:CleanSwitchModule()
+    let file_name = expand("%:r")
+    if expand("%:e") == "icl"
+      let new_file_name = file_name . "." . "dcl"
+    else
+      let new_file_name = file_name . "." . "icl"
+    endif
+    exec "edit " . new_file_name
+  endfunction
+endif
+
+map <buffer> <LocalLeader>m :call <SID>CleanSwitchModule()<CR>
+
+let b:all_tag_files = split(globpath('./Clean\ System\ Files/ctags', '*_tags'), '\n')
+for b:tag_file_name in b:all_tag_files
+  exec "set tags+=" . substitute(b:tag_file_name, "Clean System Files", "Clean\\\\\\\\\\\\\ System\\\\\\\\\\\\ Files", "") . ";"
 endfor
 
-let &cpo = s:save_cpo
+let &cpo = s:cpo_save
+unlet s:cpo_save
+
