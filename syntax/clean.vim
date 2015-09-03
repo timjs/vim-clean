@@ -3,7 +3,7 @@
 " Maintainer:   Jurriën Stutterheim <j.stutterheim@cs.ru.nl>
 " Contributor:  Tim Steenvoorden <t.steenvoorden@cs.ru.nl>
 " License:      This file is placed in the public domain.
-" Last Change:  1 Sep 2015
+" Last Change:  3 Sep 2015
 
 if exists("b:current_syntax")
   finish
@@ -12,11 +12,11 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-syn keyword cleanTodo TODO FIXME XXX BUG NB contained
+syn keyword cleanTodo TODO FIXME XXX BUG NB contained containedin=cleanComment
 
-syn region cleanComment start="//"      end="$"   contains=cleanTodo,@Spell oneline display
-syn region cleanComment start="^\s*/\*" end="\*/" contains=cleanTodo,@Spell fold
-syn region cleanComment start="/\*"     end="\*/" contains=cleanTodo,@Spell
+syn region cleanComment start="//"      end="$"   contains=@Spell oneline display
+" syn region cleanComment start="^\s*/\*" end="\*/" contains=cleanComment,@Spell fold
+syn region cleanComment start="/\*"     end="\*/" contains=cleanComment,@Spell
 
 syn keyword cleanConditional if case
 syn keyword cleanLabel let! let with where in of
@@ -99,5 +99,4 @@ let b:current_syntax = 'clean'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
 
