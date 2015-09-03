@@ -27,6 +27,7 @@ syn keyword cleanForeign export foreign code
 syn keyword cleanGenerics generic derive
 syn keyword cleanBasicType Int Real Char Bool String
 syn keyword cleanSpecialType World ProcId Void Files File
+syn match   cleanModule "^\s*\(\(implementation\|definition\|system\)\s\+\)\?module\s\+" display
 
 syn match cleanCharDenot "'.'" display
 syn match cleanCharsDenot "'[^'\\]*\(\\.[^'\\]\)*'" contained display
@@ -34,8 +35,6 @@ syn match cleanIntegerDenot "[+-~]\=\<\(\d\+\|0[0-7]\+\|0x[0-9A-Fa-f]\+\)\>" dis
 syn match cleanRealDenot "[+-~]\=\<\d\+\.\d+\(E[+-~]\=\d+\)\=" display
 syn region cleanStringDenot start=/"/ skip=/\\"/ end=/"/ oneline contains=@Spell
 syn keyword cleanBoolDenot True False
-
-syn match cleanModuleSystem "^\s*\(\(implementation\|definition\|system\)\s\+\)\?module\s\+" display
 
 syn region  cleanIncludeRegion start="^\s*\(from\|import\|\s\+\(as\|qualified\)\)" end="$" contains=cleanIncludeKeyword,cleanDelimiters,cleanTypeDef,cleanModuleImport,cleanTypeClass keepend
 syn keyword cleanIncludeKeyword from import as qualified contained
@@ -68,7 +67,7 @@ hi def link cleanGenerics        Keyword
 hi def link cleanBasicType       Type
 hi def link cleanSpecialType     cleanBasicType
 
-hi def link cleanModuleSystem    Keyword
+hi def link cleanModule          Keyword
 hi def link cleanIncludeKeyword  Include
 hi def link cleanModuleImport    Type
 
