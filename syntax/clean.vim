@@ -91,7 +91,7 @@ hi def link cleanDeriving        Keyword
 
 hi def link cleanOperators       Operator
 
-syntax sync ccomment
+syntax sync ccomment cleanComment
 setlocal foldmethod=syntax
 
 let b:current_syntax = 'clean'
