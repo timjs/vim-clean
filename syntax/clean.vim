@@ -22,11 +22,11 @@ syn keyword cleanConditional if case
 syn keyword cleanLabel let! let with where in of
 syn match   cleanLabel "^\s*#\(!\)\?\s*" display
 syn keyword cleanKeyword infixl infixr infix
-syn keyword cleanTypeClass class instance export special
-syn keyword cleanDerive derive
+syn keyword cleanTypeClass class instance special
+syn keyword cleanForeign export foreign code
+syn keyword cleanGenerics generic derive
 syn keyword cleanBasicType Int Real Char Bool String
 syn keyword cleanSpecialType World ProcId Void Files File
-syn keyword cleanFFI foreign code
 
 syn match cleanCharDenot "'.'" display
 syn match cleanCharsDenot "'[^'\\]*\(\\.[^'\\]\)*'" contained display
@@ -66,10 +66,10 @@ HiLink cleanConditional     Conditional
 HiLink cleanLabel           Label
 HiLink cleanKeyword         Keyword
 HiLink cleanTypeClass       Keyword
-HiLink cleanDerive          Keyword
+HiLink cleanForeign         Keyword
+HiLink cleanGenerics        Keyword
 HiLink cleanBasicType       Type
 HiLink cleanSpecialType     Type
-HiLink cleanFFI             Keyword
 
 HiLink cleanModuleSystem    Keyword
 HiLink cleanIncludeKeyword  Include
