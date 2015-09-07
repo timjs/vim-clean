@@ -26,6 +26,8 @@ setlocal formatoptions-=tc formatoptions+=ro
 
 setlocal suffixesadd=.icl,.dcl
 
+compiler cpm
+
 if !exists("*s:CleanSwitchModule")
   function s:CleanSwitchModule()
     let file_name = expand("%:r")
