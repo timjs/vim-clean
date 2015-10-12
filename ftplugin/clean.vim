@@ -13,11 +13,12 @@ let b:did_ftplugin = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
-let b:undo_ftplugin = "setlocal ts< sw< et< com< cms< fo< sua<"
+let b:undo_ftplugin = "setlocal ts< sw< et< si< com< cms< fo< sua<"
 
 setlocal tabstop=4
 setlocal shiftwidth=4
 setlocal expandtab
+setlocal nosmartindent
 
 setlocal comments=s1:/*,mb:*,ex:*/,://
 setlocal commentstring=//\ %s
