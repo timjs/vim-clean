@@ -21,9 +21,14 @@ let b:clean_project_file = glob('*.prj') "FIXME may return multiple files
 let &l:makeprg = 'cpm project ' . b:clean_project_file . ' build'
 
 setlocal isfname-=,
-let &l:errorformat  = '%EError [%f\,%l\,%s]: %m' " Compiler error
-let &l:errorformat .= ',%EParse error [%f\,%l;%c\,%s]: %m' " Parse error
-let &l:errorformat .= ',%-G%.%#' " Ignore rest
+let &l:errorformat  = '%E%trror [%f\,%l\,]: %m' " General error (without location info)
+let &l:errorformat .= ',%E%trror [%f\,%l\,%s]: %m' " General error
+let &l:errorformat .= ',%E%type error [%f\,%l\,%s]:%m' " Type error
+let &l:errorformat .= ',%E%tverloading error [%f\,%l\,%s]:%m' " Overloading error
+let &l:errorformat .= ',%E%tniqueness error [%f\,%l\,%s]:%m' " Uniqueness error
+let &l:errorformat .= ',%E%tarse error [%f\,%l;%c\,%s]: %m' " Parse error
+let &l:errorformat .= ',%+C %m' " Extra info
+let &l:errorformat .= ',%-G%s' " Ignore rest
 
 " Finalize Compiler File: {{{1
 " =======================
