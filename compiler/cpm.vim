@@ -22,7 +22,7 @@ let &l:makeprg = 'cpm project ' . b:clean_project_file . ' build'
 
 setlocal isfname-=,
 let &l:errorformat  = '%E%trror [%f\,%l]: %m' " General error (without location info)
-let &l:errorformat  = ',%E%trror [%f\,%l\,]: %m' " General error (without location info)
+let &l:errorformat .= ',%E%trror [%f\,%l\,]: %m' " General error (without location info)
 let &l:errorformat .= ',%E%trror [%f\,%l\,%s]: %m' " General error
 let &l:errorformat .= ',%E%type error [%f\,%l\,%s]:%m' " Type error
 let &l:errorformat .= ',%E%tverloading error [%f\,%l\,%s]:%m' " Overloading error
